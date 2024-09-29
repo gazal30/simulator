@@ -92,7 +92,6 @@ module "network" {
   source = "../../modules/network"
 
   name              = var.name
-  availability_zone = random_shuffle.availability_zones.result[0]
   tags              = local.tags
 }
 
@@ -103,7 +102,6 @@ module "cluster" {
   network_id            = module.network.network_id
   public_subnet_id      = module.network.public_subnet_id
   private_subnet_id     = module.network.private_subnet_id
-  availability_zone     = random_shuffle.availability_zones.result[0]
   bastion_ami_id        = local.bastion_ami_id
   bastion_instance_type = local.bastion_instance_type
   bastion_ssh_ingress   = local.bastion_ssh_ingress
