@@ -46,7 +46,8 @@ locals {
   ansible_playbook_init_cluster = "${var.ansible_playbook_dir}/init-cluster.yaml"
 
   bastion_ami_id        = data.aws_ami.bastion.id
-  bastion_instance_type = "t2.small"
+  bastion_instance_type = "t3.small"  # Changed instance type
+
   bastion_ssh_ingress = length(var.bastion_ssh_ingress) > 0 ? var.bastion_ssh_ingress : [
     format("%s/32", trim(data.http.player_ip.response_body, "\n")),
   ]
@@ -57,7 +58,7 @@ locals {
       count                = 1
       ami_id               = data.aws_ami.k8s.id
       public               = false
-      instance_type        = "t2.medium"
+      instance_type        = "t3.medium"  # Changed instance type
       iam_instance_profile = ""
       volume_type          = "gp2"
       volume_size          = "20"
@@ -67,7 +68,7 @@ locals {
       count                = 2
       ami_id               = data.aws_ami.k8s.id
       public               = false
-      instance_type        = "t2.medium"
+      instance_type        = "t3.medium"  # Changed instance type
       iam_instance_profile = ""
       volume_type          = "gp2"
       volume_size          = "20"
@@ -77,12 +78,13 @@ locals {
       count                = 1
       ami_id               = data.aws_ami.k8s.id
       public               = false
-      instance_type        = "t2.small"
+      instance_type        = "t3.small"  # Changed instance type
       iam_instance_profile = ""
       volume_type          = "gp2"
       volume_size          = "20"
     }
   ]
+
   tags = {
     Name : title(var.name)
   }
